@@ -16,8 +16,10 @@
     <th>followers</th>
     <td><%= link_to user.followers.count, user_followers_path(user) %></td>
   </tr>
+
 </table>
-　
+  
+
 <div class='row'>
   <% if current_user != user %>
     <%= render "relationships/btn", user: user %>
@@ -26,3 +28,16 @@
     <i class="fas fa-user-cog"></i>
   <% end %>
 </div>
+  <% unless user.id == current_user.id  %>
+    <% if @is_mutual_follow%>
+      <% if @is_room %>
+      <%= link_to "チャットを開始", room_path(@room.id), class: "btn btn-primary"%>
+       <% else %>
+      <%= form_with model: @room, url:rooms_path ,local: true do |f|%>
+        <%= f.hidden_field :user_id, value: user.id %>
+        <%= f.submit "チャットルームを作成する", class: "btn btn-primary" %>
+      <% end %>
+   
+      <% end %>
+    <% end %>
+  <% end %>

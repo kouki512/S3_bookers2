@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="chats">
+        <% @chatting_user.each do |chatting| %>
+          <h1><%= chatting.user.name %>さんとのチャット</h1>
+        <% end %>
+      <div class="chat">
+        <% if @messages.present? %>
+          <% @messages.each do |message| %>
+            <div class="chat-box">
+              <div class="chat-name"><%= message.user.name %></div>
+              <div class="chat-hukidashi"> <strong><%= message.message %></strong> <br>
+                <%= message.created_at.strftime("%Y-%m-%d %H:%M")%>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="posts">
+        <%= form_for @message do |f| %>
+          <%= f.text_field :message, placeholder: "メッセージを入力して下さい" , size: 70, class:"form-text-field" %>
+            <%= f.hidden_field :room_id, value: @room.id %>
+              <%= f.submit "投稿",class: 'form-submit'%>
+        <% end %>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
