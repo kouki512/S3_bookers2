@@ -5,6 +5,7 @@ class BooksController < ApplicationController
   def show
     @book = Book.find(params[:id])
     @book_comment = BookComment.new
+    @book.book_view_count(current_user)
   end
 
   def index
@@ -14,6 +15,7 @@ class BooksController < ApplicationController
       b.favorites.weekly_sort(to,from) <=> a.favorites.weekly_sort(to,from)
     }
     @book = Book.new
+    
   end
 
   def create
